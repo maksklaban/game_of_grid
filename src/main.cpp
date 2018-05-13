@@ -3,13 +3,16 @@
 
 #include "game_of_life.h"
 
+using namespace conway_game;
+
 int main()
 {
     game_of_life game;
 
-    while (true)
+    if (game.init())
     {
-
+        game.run();
     }
+
     return 0;
 }

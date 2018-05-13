@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1526239933 source:/home/maks/test/grid_of_life/src/game_grid.cpp
+	"game_grid.h"
+
+1526236649 /home/maks/test/grid_of_life/src/game_grid.h
+	"defines.h"
+
+1526236832 /home/maks/test/grid_of_life/src/defines.h
+	<iostream>
+	<thread>
+	<mutex>
+	<vector>
+	<list>
+	<sstream>
+	<fstream>
+	<chrono>
+	"game_of_life.h"
+	"game_grid.h"
+
+1526237131 /home/maks/test/grid_of_life/src/game_of_life.h
+	"defines.h"
+
+1526239402 source:/home/maks/test/grid_of_life/src/game_of_life.cpp
+	"game_of_life.h"
+
+1526237146 source:/home/maks/test/grid_of_life/src/main.cpp
+	<iostream>
+	<memory>
+	"game_of_life.h"
+

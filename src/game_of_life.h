@@ -1,14 +1,18 @@
 #ifndef GAME_OF_LIFE_H
 #define GAME_OF_LIFE_H
 
+#include "defines.h"
+
 namespace conway_game
 {
+    class game_grid;
+
     struct point
     {
         int x;
         int y;
 
-        point() : x(0), y(0) {}
+        point(int x, int y) : x(x), y(y) {}
     };
 
     class game_of_life
@@ -16,10 +20,10 @@ namespace conway_game
     private:
         std::vector<point> m_init_cells;
         std::list<game_grid> m_grid_states;
-        size_t m_grid_cols;
-        size_t m_grid_rows;
         std::string m_conf_filename;
         std::string m_log_filename;
+        size_t m_grid_cols;
+        size_t m_grid_rows;
         std::ofstream m_log;
         std::thread m_producer;
         std::thread m_consumer;
@@ -29,6 +33,7 @@ namespace conway_game
         bool m_flag_done;
 
         bool load_settings();
+        void log_state(const game_grid& state);
     public:
         game_of_life(const std::string& conf_filename="conf.ini", const std::string& log_filename="app_log.txt");
         virtual ~game_of_life();

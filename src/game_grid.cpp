@@ -5,37 +5,109 @@ using namespace std;
 namespace conway_game
 {
     game_grid::game_grid(size_t grid_cols, size_t grid_rows, const vector<point>& points)
-        : m_grid_cols(grid_cols), m_grid_rows(grid_rows)
+        : m_grid_cols(grid_cols), m_grid_rows(grid_rows), m_is_over(false), m_is_loged(false)
     {
-        m_grid_curr.resize(m_grid_cols, vector<bool>(m_grid_rows, 0));
+        m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
 
         for (auto& point: points)
         {
-            m_grid_curr[x][y] = true;
+            m_grid_curr[point.x][point.y] = true;
         }
     }
 
     game_grid::game_grid(const game_grid& another)
     {
-        memcpy(this, *another, sizeof(game_grid));
+        if (this != &another)
+        {
+//            m_grid_curr = another.m_grid_curr;
+            m_grid_cols = another.m_grid_cols;
+            m_grid_rows = another.m_grid_rows;
+            m_is_over = another.m_is_over;
+
+            m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
+
+            for(size_t a = 0; a < m_grid_cols; a++)
+            {
+                for(size_t b = 0; b < m_grid_rows; b++)
+                {
+                    m_grid_curr[a][b] = another.m_grid_curr[a][b];
+                }
+            }
+//            memcpy(this, &another, sizeof(game_grid));
+        }
     }
 
     game_grid::~game_grid() {}
 
-    void game_grid::determine_state()
+    game_grid& game_grid::operator=(const game_grid& another)
     {
-        for(int a = 1; a < grid_cols; a++)
+        if (this != &another)
         {
-            for(int b = 1; b < grid_rows; b++)
+            m_grid_cols = another.m_grid_cols;
+            m_grid_rows = another.m_grid_rows;
+            m_is_over = another.m_is_over;
+
+            m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
+
+            for(size_t a = 0; a < m_grid_cols; a++)
+            {
+                for(size_t b = 0; b < m_grid_rows; b++)
+                {
+                    m_grid_curr[a][b] = another.m_grid_curr[a][b];
+                }
+            }
+        }
+        return *this;
+    }
+
+    size_t game_grid::get_cols_count() const
+    {
+        return m_grid_cols;
+    }
+
+    size_t game_grid::get_rows_count() const
+    {
+        return m_grid_rows;
+    }
+
+    const bool_matrix& game_grid::get_grid() const
+    {
+        return m_grid_curr;
+    }
+
+    bool game_grid::is_over() const
+    {
+        return m_is_over;
+    }
+
+    bool game_grid::is_loged() const
+    {
+        return m_is_loged;
+    }
+
+    void game_grid::set_log_flag()
+    {
+        m_is_loged = true;
+    }
+
+    bool game_grid::determine_state()
+    {
+        m_is_over = true;
+        for(int y = 1; y < m_grid_cols; y++)
+        {
+            for(int x = 1; x < m_grid_rows; x++)
             {
                 int alive = 0;
-                for(int c = -1; c < 2; c++)
+                for(int c = y - 1; c <= y + 1; c++)
                 {
-                    for(int d = -1; d < 2; d++)
+                    for(int d = x - 1; d <= x + 1; d++)
                     {
-                        if(!(c == 0 && d == 0))
+                        if (c == y && d == x)
+                            continue;
+
+                        if(c > -1 && c < m_grid_cols && d > -1 && d < m_grid_rows)
                         {
-                            if(m_grid_curr[a+c][b+d])
+                            if(m_grid_curr[c][d])
                             {
                                 ++alive;
                             }
@@ -44,27 +116,32 @@ namespace conway_game
                 }
                 if(alive < 2)
                 {
-                    m_grid_curr[a][b] = false;
+                    m_grid_curr[y][x] = false;
                 }
                 else if(alive == 3)
                 {
-                    m_grid_curr[a][b] = true;
+                    m_is_over = false;
+                    m_grid_curr[y][x] = true;
                 }
                 else if(alive > 3)
                 {
-                    m_grid_curr[a][b] = false;
+                    m_grid_curr[y][x] = false;
                 }
             }
         }
+        return m_is_over;
     }
 
     ostream& operator<<(ostream& stream, const game_grid& grid)
     {
-        for(int a = 1; a < grid_cols; a++)
+        size_t cols_count = grid.get_cols_count();
+        size_t rows_count = grid.get_rows_count();
+        auto& grid_matrix = grid.get_grid();
+        for(size_t a = 0; a < cols_count; a++)
+        {
+            for(size_t b = 0; b < rows_count; b++)
             {
-            for(int b = 1; b < grid_rows; b++)
-            {
-                if(m_grid_curr[a][b] == true)
+                if(grid_matrix[a][b] == true)
                 {
                     stream << " O ";
                 }
@@ -72,7 +149,7 @@ namespace conway_game
                 {
                     stream << " . ";
                 }
-                if(b == grid_rows-1)
+                if(b == rows_count-1)
                 {
                     stream << endl;
                 }
