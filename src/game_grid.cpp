@@ -4,9 +4,15 @@ using namespace std;
 
 namespace conway_game
 {
-    game_grid::game_grid(size_t grid_cols, size_t grid_rows) : m_grid_cols(grid_cols), m_grid_rows(grid_rows)
+    game_grid::game_grid(size_t grid_cols, size_t grid_rows, const vector<point>& points)
+        : m_grid_cols(grid_cols), m_grid_rows(grid_rows)
     {
         m_grid_curr.resize(m_grid_cols, vector<bool>(m_grid_rows, 0));
+
+        for (auto& point: points)
+        {
+            m_grid_curr[x][y] = true;
+        }
     }
 
     game_grid::game_grid(const game_grid& another)

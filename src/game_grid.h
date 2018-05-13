@@ -11,7 +11,7 @@ namespace conway_game
         size_t m_grid_rows;
 
     public:
-        game_grid(size_t grid_cols, size_t grid_rows);
+        game_grid(size_t grid_cols, size_t grid_rows, const std::vector<point>& points);
         game_grid(const game_grid& another);
         ~game_grid();
 

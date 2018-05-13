@@ -35,6 +35,7 @@
 		<Unit filename="conf.ini" />
 		<Unit filename="src/game_grid.cpp" />
 		<Unit filename="src/game_grid.h" />
+		<Unit filename="src/game_of_life.cpp" />
 		<Unit filename="src/game_of_life.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>

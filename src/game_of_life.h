@@ -25,13 +25,15 @@ namespace conway_game
         std::thread m_consumer;
         std::mutex m_prod_mtx;
         std::mutex m_cons_mtx;
-        bool m_debug;
+        std::mutex m_states_mtx;
+        bool m_flag_done;
 
+        bool load_settings();
     public:
         game_of_life(const std::string& conf_filename="conf.ini", const std::string& log_filename="app_log.txt");
         virtual ~game_of_life();
 
-        void init();
+        bool init();
         void run();
         void stop();
     };
