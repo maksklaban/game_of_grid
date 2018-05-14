@@ -25,7 +25,7 @@ namespace conway_game
         time(&rawtime);
         timeinfo = localtime(&rawtime);
 
-        m_log <<"State:\n" << state << ": timestamp " << asctime(timeinfo) << endl;
+        cout <<"State:\n" << state << ": timestamp " << asctime(timeinfo) << endl;
     }
 
     bool game_of_life::load_settings()

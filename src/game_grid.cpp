@@ -49,15 +49,28 @@ namespace conway_game
 
             m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
 
-            for(size_t a = 0; a < m_grid_cols; a++)
+            for(size_t y = 0; y < m_grid_cols; y++)
             {
-                for(size_t b = 0; b < m_grid_rows; b++)
+                for(size_t x = 0; x < m_grid_rows; x++)
                 {
-                    m_grid_curr[a][b] = another.m_grid_curr[a][b];
+                    m_grid_curr[y][x] = another.m_grid_curr[y][x];
                 }
             }
         }
         return *this;
+    }
+
+    bool game_grid::operator==(const game_grid& another)
+    {
+        for(size_t y = 0; y < m_grid_cols; y++)
+        {
+            for(size_t x = 0; x < m_grid_rows; x++)
+            {
+                if (m_grid_curr[y][x] != another.m_grid_curr[y][x])
+                    return false;
+            }
+        }
+        return true;
     }
 
     size_t game_grid::get_cols_count() const
@@ -92,10 +105,13 @@ namespace conway_game
 
     bool game_grid::determine_state()
     {
+        game_grid temp(*this);
+        auto& temp_grid = temp.get_grid();
+
         m_is_over = true;
-        for(int y = 1; y < m_grid_cols; y++)
+        for(int y = 0; y < m_grid_cols; y++)
         {
-            for(int x = 1; x < m_grid_rows; x++)
+            for(int x = 0; x < m_grid_rows; x++)
             {
                 int alive = 0;
                 for(int c = y - 1; c <= y + 1; c++)
@@ -107,7 +123,7 @@ namespace conway_game
 
                         if(c > -1 && c < m_grid_cols && d > -1 && d < m_grid_rows)
                         {
-                            if(m_grid_curr[c][d])
+                            if(temp_grid[c][d])
                             {
                                 ++alive;
                             }
@@ -129,6 +145,7 @@ namespace conway_game
                 }
             }
         }
+        m_is_over = *this == temp;
         return m_is_over;
     }
 
