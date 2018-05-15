@@ -163,7 +163,10 @@ namespace conway_game
                     }
                 }
                 if (result)
+                {
+                    cout << "Game over!!! " << endl;
                     break;
+                }
             }
         });
 
