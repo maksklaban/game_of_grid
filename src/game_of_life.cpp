@@ -25,7 +25,7 @@ namespace conway_game
         time(&rawtime);
         timeinfo = localtime(&rawtime);
 
-        cout <<"State:\n" << state << ": timestamp " << asctime(timeinfo) << endl;
+        m_log <<"State:\n" << state << ": timestamp " << asctime(timeinfo) << endl;
     }
 
     bool game_of_life::load_settings()
@@ -81,13 +81,32 @@ namespace conway_game
 
                     sstr.str(buffer);
                     sstr >> x;
+                    if (sstr.fail())
+                        continue;
                     sstr >> y;
+                    if (sstr.fail())
+                        continue;
                     sstr.clear();
                     m_init_cells.push_back(point(x, y));
                 }
             }
         }
         return result;
+    }
+
+    const vector<point>& game_of_life::get_init_cells() const
+    {
+        return m_init_cells;
+    }
+
+    const size_t& game_of_life::get_grid_cols() const
+    {
+        return m_grid_cols;
+    }
+
+    const size_t& game_of_life::get_grid_rows() const;
+    {
+        return m_grid_rows;
     }
 
     bool game_of_life::init()

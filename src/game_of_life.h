@@ -38,6 +38,10 @@ namespace conway_game
         game_of_life(const std::string& conf_filename="conf.ini", const std::string& log_filename="app_log.txt");
         virtual ~game_of_life();
 
+        const std::vector<point>& get_init_cells() const;
+        const size_t& get_grid_cols() const;
+        const size_t& get_grid_rows() const;
+
         bool init();
         void run();
         void stop();

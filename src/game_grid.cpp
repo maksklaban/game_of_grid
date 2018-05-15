@@ -5,14 +5,29 @@ using namespace std;
 namespace conway_game
 {
     game_grid::game_grid(size_t grid_cols, size_t grid_rows, const vector<point>& points)
-        : m_grid_cols(grid_cols), m_grid_rows(grid_rows), m_is_over(false), m_is_loged(false)
+        : m_grid_cols(grid_cols), m_grid_rows(grid_rows), m_is_loged(false)
     {
-        m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
+        m_grid_curr.resize(m_grid_cols, vector<bool>(m_grid_rows, 0));
 
-        for (auto& point: points)
+        if (points.empty())
         {
-            m_grid_curr[point.x][point.y] = true;
+            m_is_over = true;
         }
+        else
+        {
+            for (auto& point: points)
+            {
+                if (point.x > -1 &&
+                    point.y > -1 &&
+                    point.x < m_grid_cols &&
+                    point.y < m_grid_rows)
+                 {
+                    m_grid_curr[point.x][point.y] = true;
+                 }
+            }
+            m_is_over = false;
+        }
+
     }
 
     game_grid::game_grid(const game_grid& another)
@@ -108,7 +123,7 @@ namespace conway_game
         game_grid temp(*this);
         auto& temp_grid = temp.get_grid();
 
-        m_is_over = true;
+//        m_is_over = true;
         for(int y = 0; y < m_grid_cols; y++)
         {
             for(int x = 0; x < m_grid_rows; x++)
