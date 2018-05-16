@@ -7,7 +7,7 @@ namespace conway_game
     game_grid::game_grid(size_t grid_cols, size_t grid_rows, const vector<point>& points)
         : m_grid_cols(grid_cols), m_grid_rows(grid_rows), m_is_loged(false)
     {
-        m_grid_curr.resize(m_grid_cols + 1, vector<bool>(m_grid_rows + 1, 0));
+        m_grid_curr.resize(grid_cols + 1, vector<bool>(grid_rows + 1, 0));
 
         if (points.empty())
         {
@@ -19,10 +19,10 @@ namespace conway_game
             {
                 if (point.x > -1 &&
                     point.y > -1 &&
-                    point.x < m_grid_cols &&
-                    point.y < m_grid_rows)
+                    point.x < m_grid_rows &&
+                    point.y < m_grid_cols)
                  {
-                    m_grid_curr[point.x][point.y] = true;
+                    m_grid_curr[point.y][point.x] = true;
                  }
             }
             m_is_over = false;
@@ -41,11 +41,11 @@ namespace conway_game
 
             m_grid_curr.resize(m_grid_cols + 2, vector<bool>(m_grid_rows, 0));
 
-            for(size_t a = 0; a < m_grid_cols; a++)
+            for(size_t y = 0; y < m_grid_cols; y++)
             {
-                for(size_t b = 0; b < m_grid_rows; b++)
+                for(size_t x = 0; x < m_grid_rows; x++)
                 {
-                    m_grid_curr[a][b] = another.m_grid_curr[a][b];
+                    m_grid_curr[y][x] = another.m_grid_curr[y][x];
                 }
             }
 //            memcpy(this, &another, sizeof(game_grid));
@@ -170,11 +170,11 @@ namespace conway_game
         size_t cols_count = grid.get_cols_count();
         size_t rows_count = grid.get_rows_count();
         auto& grid_matrix = grid.get_grid();
-        for(size_t a = 0; a < cols_count; a++)
+        for(size_t y = 0; y < cols_count; y++)
         {
-            for(size_t b = 0; b < rows_count; b++)
+            for(size_t x = 0; x < rows_count; x++)
             {
-                if(grid_matrix[a][b] == true)
+                if(grid_matrix[y][x] == true)
                 {
                     stream << " O ";
                 }
@@ -182,7 +182,7 @@ namespace conway_game
                 {
                     stream << " . ";
                 }
-                if(b == rows_count-1)
+                if(x == rows_count-1)
                 {
                     stream << endl;
                 }

@@ -33,9 +33,9 @@ namespace conway_game
         bool m_flag_done;
 
         bool load_settings();
-        void log_state(const game_grid& state);
+        void log_state(game_grid& state);
     public:
-        game_of_life(const std::string& conf_filename="conf.ini", const std::string& log_filename="app_log.txt");
+        game_of_life(const std::string& conf_filename="conf.ini", const std::string& log_filename="game_log.txt");
         virtual ~game_of_life();
 
         const std::vector<point>& get_init_cells() const;

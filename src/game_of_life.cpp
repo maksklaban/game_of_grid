@@ -5,7 +5,7 @@ using namespace chrono;
 
 namespace conway_game
 {
-    game_of_life::game_of_life(const string& conf_filename/*="conf.ini"*/, const string& log_filename/*="app_log.txt"*/)
+    game_of_life::game_of_life(const string& conf_filename/*="conf.ini"*/, const string& log_filename/*="game_log.txt"*/)
         : m_conf_filename(conf_filename),
           m_log_filename(log_filename),
           m_grid_cols(20),
@@ -17,7 +17,7 @@ namespace conway_game
         stop();
     }
 
-    void game_of_life::log_state(const game_grid& state)
+    void game_of_life::log_state(game_grid& state)
     {
         time_t rawtime;
         struct tm* timeinfo;
@@ -26,6 +26,7 @@ namespace conway_game
         timeinfo = localtime(&rawtime);
 
         m_log <<"State:\n" << state << ": timestamp " << asctime(timeinfo) << endl;
+        state.set_log_flag();
     }
 
     bool game_of_life::load_settings()
@@ -168,7 +169,6 @@ namespace conway_game
                     if (!grid_ref.is_loged())
                     {
                         log_state(grid_ref);
-                        grid_ref.set_log_flag();
                     }
                     result = grid_ref.is_over();
 

@@ -31,7 +31,7 @@ TEST_CASE("game_of_life test(conf_test.ini)", "[Game of life test]")
         game_grid test_grid(grid_cols, grid_rows, points_ref);
         auto& grid_points_ref = get_grid();
 
-        std::vector<point> init_point_values;
+        std::vector<point> init_point_values1;
         init_values.push_back(point(0,1));
         init_values.push_back(point(1,2));
         init_values.push_back(point(2,0));
@@ -42,10 +42,20 @@ TEST_CASE("game_of_life test(conf_test.ini)", "[Game of life test]")
         init_values.push_back(point(-1,2));
         init_values.push_back(point(1,5));
 
-        game_grid test_grid2(11, 20, init_point_values);
+        std::vector<point> init_point_values2;
+        init_values.push_back(point(3,4));+
+        init_values.push_back(point(4,5));
+        init_values.push_back(point(4,3));+
+        init_values.push_back(point(1,4));
+        init_values.push_back(point(5,3));
+
+
+        game_grid test_grid2(11, 20, init_point_values1);
         game_grid test_grid3(20, 20, std::vector<point>());
         test_grid3.set_log_flag();
         game_grid test_grid4(test_grid3);
+        game_grid test_grid5(10, 10, init_point_values2);
+        test_grid5.determine_state();
 
 
         REQUIRE(grid_points_ref[2][0] == true)
