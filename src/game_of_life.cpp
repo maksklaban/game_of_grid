@@ -104,7 +104,7 @@ namespace conway_game
         return m_grid_cols;
     }
 
-    const size_t& game_of_life::get_grid_rows() const;
+    const size_t& game_of_life::get_grid_rows() const
     {
         return m_grid_rows;
     }
