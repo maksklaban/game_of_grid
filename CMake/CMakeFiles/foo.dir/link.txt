@@ -1,2 +1,0 @@
-/usr/bin/ar qc libfoo.a  CMakeFiles/foo.dir/game_of_life.cpp.o CMakeFiles/foo.dir/game_grid.cpp.o
-/usr/bin/ranlib libfoo.a
