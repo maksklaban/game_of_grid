@@ -1,4 +1,0 @@
-/home/dev1/Downloads/grid_of_life/tmp/CMakeFiles/rebuild_cache.dir
-/home/dev1/Downloads/grid_of_life/tmp/CMakeFiles/edit_cache.dir
-/home/dev1/Downloads/grid_of_life/tmp/CMakeFiles/main.dir
-/home/dev1/Downloads/grid_of_life/tmp/CMakeFiles/game.dir

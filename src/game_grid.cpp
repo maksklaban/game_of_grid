@@ -75,7 +75,7 @@ namespace conway_game
         return *this;
     }
 
-    bool game_grid::operator==(const game_grid& another)
+    bool game_grid::operator==(const game_grid& another) const
     {
         for(size_t y = 0; y < m_grid_cols; y++)
         {

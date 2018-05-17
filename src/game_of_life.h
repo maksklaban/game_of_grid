@@ -13,6 +13,11 @@ namespace conway_game
         int y;
 
         point(int x, int y) : x(x), y(y) {}
+
+        bool operator==(const point& other) const
+        {
+            return this->x == other.x && this->y == other.y;
+        }
     };
 
     class game_of_life

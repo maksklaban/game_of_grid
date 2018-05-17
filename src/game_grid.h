@@ -24,7 +24,7 @@ namespace conway_game
         ~game_grid();
 
         game_grid& operator=(const game_grid& another);
-        bool operator==(const game_grid& another);
+        bool operator==(const game_grid& another) const;
 
         const bool_matrix& get_grid() const;
         size_t get_cols_count() const;
